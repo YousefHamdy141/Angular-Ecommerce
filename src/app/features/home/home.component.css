@@ -1,0 +1,33 @@
+.custom-background {
+  background-image: url("./../../../../public/bg1.avif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .custom-background {
+    display: none;
+    height: auto;
+    padding: 3rem 1rem;
+  }
+}
+
+.bg-text {
+  position: absolute;
+  color: antiquewhite;
+  bottom: 20%;
+  right: 10%;
+
+}
+
+.custom-container {
+  width: 90%;
+  margin: auto;
+}
+
+.peace {
+  width: 50vw;
+  height: 60vh;
+}

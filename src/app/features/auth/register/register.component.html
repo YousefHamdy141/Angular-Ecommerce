@@ -1,0 +1,77 @@
+<div class="card shadow p-4 rounded mx-auto my-5" style="max-width: 500px; width: 80%">
+    <h2 class="fw-bold text-primary mb-3 mx-auto">Sign up</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="row g-3">
+        <div class="col-md-6">
+            <label for="fName" class="form-label fw-bold">First Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" id="fName" formControlName="fName" placeholder="First Name">
+            </div>
+            @if (fName?.invalid && fName?.touched && fName?.errors?.['required']) {
+            <div class="text-danger mt-1 fs-6">First name is Required</div>}
+        </div>
+        <div class="col-md-6">
+            <label for="lname" class="form-label fw-bold">Last Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" formControlName="lName" id="lname" placeholder="Last Name">
+            </div>
+            @if (lName?.invalid && lName?.touched && lName?.errors?.['required']) {
+            <div class="text-danger mt-1 fs-6">Last name is Required</div>}
+        </div>
+        <div class="col-12">
+            <label for="email" class="form-label fw-bold">Email Address</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" id="email" formControlName="email"
+                    placeholder="example@mail.com">
+            </div>
+            @if (email?.invalid && email?.touched) {
+            @if(email?.errors?.['required']){
+            <div class="text-danger mt-1 fs-6">Email address is Required</div>
+            } @else if (email?.errors?.['found']){
+            <div class="text-danger mt-1 fs-6">Email already in use, Please sign in</div>
+            }
+            @else{
+            <div class="text-danger mt-1 fs-6">Please add A valid email address</div>
+            }
+            }
+        </div>
+        <div class="col-12">
+            <label for="password" class="form-label fw-bold">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="password" formControlName="password"
+                    placeholder="Enter password">
+            </div>
+            @if (password?.invalid && password?.touched) {
+            @if (password?.errors?.['required']) {
+            <div class="text-danger mt-1">Password is Required</div>
+            } @else if (password?.errors?.['minlength']) {
+            <div class="text-danger mt-1">Password must be at least 8 characters</div>
+            } @else if (password?.errors?.['pattern']) {
+            <div class="text-danger mt-1">Password must contain at least one uppercase letter, one number, and one
+                special
+                character</div>
+            }
+            }
+        </div>
+        <div class="col-12">
+            <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                    placeholder="Re-Enter password">
+            </div>
+            @if(confirmPassword?.hasError('passwordMismatch')){
+            <div class="text-danger mt-1">Password don't match</div>
+            }
+        </div>
+        <p>Already have an account? <a routerLink="/login" routerLinkActive="active" style="text-decoration: none">Sign
+                In</a></p>
+        <div class="col-12">
+            <button type="submit" class="btn  btn-dark fw-bold border-3 w-100" [disabled]="registerForm.invalid">Sign
+                up</button>
+        </div>
+    </form>
+</div>

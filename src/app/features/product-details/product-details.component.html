@@ -1,0 +1,90 @@
+<div class=" ms-4 mt-lg-3">
+    <span class="fw-semibold">
+        <a routerLinkActive="active"  routerLink="/home" class="text-decoration-none text-secondary fs-6" >HOME </a> 
+        <span class="text-secondary">
+            /
+        </span>
+        <a routerLinkActive="active"  routerLink="/products" class="text-decoration-none text-secondary fs-6" >PRODUCTS </a> 
+        <span class="text-secondary">
+            /
+        </span>
+        <span>
+            {{productObj.title|uppercase}}
+        </span>
+    </span>   
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-5">
+            <div>
+                <img *ngIf="productObj?.images?.length" class="mb-3" [src]="selectedImage || productObj.images[0]" class="img-thumbnail" [alt]="productObj.title">
+            </div>
+
+            @for (img of productObj.images; track $index) {
+                <img src={{img}} class="img-thumbnail my-2" style="width: 100px; cursor: pointer;" [alt]="productObj.title" (click)="getImag($event)">
+            }
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-7 ">
+            <h2 class="my-sm-4 mt-md-0 mb-md-4">{{productObj.title}}</h2>
+            <h4  class="mb-4">Price: {{productObj.price|currency:"EGP"}}</h4>
+            <p class="w-75" style="font-size: large;">{{productObj.description}}</p>
+            <h6>Category: {{productObj.category}}</h6>
+            <div class="input-group my-4 " style="width: 180px;">
+                <button class="btn btn-dark fw-bold border-3" type="button" (click)="decreaseQuantity()">
+                    <i class="bi bi-dash"></i>
+                </button>
+                <input type="text" id="quantity" class="form-control fw-bold text-center" [value]="productQuantitiy" >
+                <button class="btn btn-dark fw-bold border-3" type="button" (click)="increaseQuantity()">
+                    <i class="bi bi-plus"></i>
+                </button>
+            </div>
+            <button class="btn btn-dark fw-bold border-3 col-3 fs-5"  (click)="addToCart()">Add to cart</button>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active fw-bold" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true">Description</button>
+                <button class="nav-link fw-bold" id="nav-reveiws-tab" data-bs-toggle="tab" data-bs-target="#nav-reveiws" type="button" role="tab" aria-controls="nav-reveiws" aria-selected="false">Reveiws</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active p-3 " id="nav-description" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0"><h6>{{productObj.description}}</h6></div>
+            <div class="tab-pane fade p-3" id="nav-reveiws" role="tabpanel" aria-labelledby="nav-reveiws-tab" tabindex="0">
+                <!-- PRODUCT REVIEWS -->
+                @for (review of productObj.reviews; track $index) {
+
+                    <div class="card mt-4 shadow">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start border-bottom py-3">
+                                <img src="user.png" class="rounded-circle me-3" alt="User" style="width: 3rem;">
+                                <div>
+                                    <h6 class="mb-1">{{review.reviewerName}}</h6>
+                                    
+                                <div class="text-warning">
+                                    <ng-container *ngFor="let star of [].constructor(getStarArray(review.rating).fullStars);">
+                                        <fa-icon [icon]="faStar"></fa-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="getStarArray(review.rating).halfStar">
+                                        <fa-icon [icon]="faStarHalfAlt"></fa-icon>
+                                    </ng-container>
+                                    <ng-container *ngFor="let empty of [].constructor(getStarArray(review.rating).emptyStars);">
+                                        <fa-icon [icon]="faStar" class="text-secondary"></fa-icon>
+                                    </ng-container>
+                                    </div>
+
+                                    <p class="mt-2">{{review.comment}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                <!--  -->
+            </div>
+            </div>
+    </div>
+</div>
